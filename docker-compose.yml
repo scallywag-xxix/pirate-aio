@@ -4,40 +4,40 @@ version: "3.9"
 services:
   nzb:
     extends:
-      file: nzb/sabnzbd.yaml
+      file: src/nzb/sabnzbd.yaml
       service: nzb
   torrent:
     extends:
-      file: torrent/qbittorrent.yaml
+      file: src/torrent/qbittorrent.yaml
       service: torrent
   books:
     extends:
-      file: books/readarr.yaml
+      file: src/books/readarr.yaml
       service: books
   music:
     extends:
-      file: music/lidarr.yaml
+      file: src/music/lidarr.yaml
       service: music
   movies:
     extends:
-      file: movies/radarr.yaml
+      file: src/movies/radarr.yaml
       service: movies
   tv:
     extends:
-      file: tv/sonarr.yaml
+      file: src/tv/sonarr.yaml
       service: tv
   subs:
     extends:
-      file: subs/bazarr.yaml
+      file: src/subs/bazarr.yaml
       service: subs
   trackers:
     extends:
-      file: trackers/jackett.yaml
+      file: src/trackers/jackett.yaml
       service: trackers
 
   request:
     extends:
-      file: request/overseerr.yaml
+      file: src/request/overseerr.yaml
       service: request
 networks:
   proxy-net:
