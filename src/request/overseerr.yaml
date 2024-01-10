@@ -1,0 +1,16 @@
+---
+version: "3.9"
+
+services:
+  request:
+    image: sctx/overseerr:latest
+    container_name: request
+    env_file:
+      - .env
+    volumes:
+      - ./config:/app/config
+    ports:
+      - 30090:5055
+    networks:
+      - proxy-net
+    restart: unless-stopped

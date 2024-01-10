@@ -1,0 +1,18 @@
+---
+version: "3.9"
+
+services: 
+  subs:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: subs
+    env_file:
+      - .env
+    volumes:
+      - ./config:/config
+      - ./movies:/movies
+      - ./tv:/tv
+    ports:
+      - 30084:6767
+    networks:
+      - proxy-net
+    restart: unless-stopped

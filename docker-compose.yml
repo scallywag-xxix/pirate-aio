@@ -1,0 +1,46 @@
+---
+version: "3.9"
+
+services:
+  nzb:
+    extends:
+      file: nzb/sabnzbd.yaml
+      service: nzb
+  torrent:
+    extends:
+      file: torrent/qbittorrent.yaml
+      service: torrent
+  books:
+    extends:
+      file: books/readarr.yaml
+      service: books
+  music:
+    extends:
+      file: music/lidarr.yaml
+      service: music
+  movies:
+    extends:
+      file: movies/radarr.yaml
+      service: movies
+  tv:
+    extends:
+      file: tv/sonarr.yaml
+      service: tv
+  subs:
+    extends:
+      file: subs/bazarr.yaml
+      service: subs
+  trackers:
+    extends:
+      file: trackers/jackett.yaml
+      service: trackers
+
+  request:
+    extends:
+      file: request/overseerr.yaml
+      service: request
+networks:
+  proxy-net:
+    external: true
+  xcode-net:
+    external: false

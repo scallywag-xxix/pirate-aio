@@ -1,0 +1,17 @@
+---
+version: "3.9"
+
+services: 
+  trackers:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: trackers
+    env_file:
+      - .env
+    volumes:
+      - ./config:/config
+      - ./downloads:/downloads
+    ports:
+      - 30085:9117
+    networks:
+      - proxy-net
+    restart: unless-stopped

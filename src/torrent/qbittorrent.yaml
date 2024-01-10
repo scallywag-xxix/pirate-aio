@@ -1,0 +1,19 @@
+---
+version: "3.9"
+
+services: 
+  torrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: torrent
+    env_file:
+      - .env
+    volumes:
+      - ./config:/config
+      - ./downloads:/downloads
+    ports:
+      - 30081:30081
+      - 56560:56560
+      - 56560:56560/udp
+    networks:
+      - proxy-net
+    restart: unless-stopped

@@ -1,0 +1,39 @@
+---
+version: "3.9"
+
+services: 
+  transcode:
+    container_name: transcode
+    image: ghcr.io/haveagitgat/tdarr:latest
+    env_file:
+      - .main.env
+    volumes:
+      - ./server:/app/server
+      - ./configs:/app/configs
+      - ./logs:/app/logs
+      - ./media:/media
+      - ./temp:/temp
+    ports:
+      - 30088:8265
+      - 30089:8266
+      - 10067:8267
+    networks:
+      - proxy-net
+      - xcode-net
+    restart: unless-stopped
+
+  transcode-node:
+    container_name: transcode-node
+    image: ghcr.io/haveagitgat/tdarr_node:latest
+    env_file:
+      - .node.env
+    volumes:
+      - ./configs:/app/configs
+      - ./logs:/app/logs
+      - ./media:/media
+      - ./temp:/temp
+    networks: 
+      - xcode-net
+    depends_on:
+      - transcode
+    restart: unless-stopped

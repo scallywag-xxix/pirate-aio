@@ -1,0 +1,17 @@
+---
+version: "3.9"
+
+services:
+  nzb:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: nzb
+    env_file:
+      - .env
+    volumes:
+      - ./config:/config
+      - ./downloads:/downloads
+    ports:
+      - 30080:8080
+    networks:
+      - proxy-net
+    restart: unless-stopped

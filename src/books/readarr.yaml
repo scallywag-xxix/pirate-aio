@@ -1,0 +1,18 @@
+---
+version: "3.9"
+
+services:
+  books:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: books
+    env_file:
+      - .env
+    volumes:
+      - ./config:/config
+      - ./downloads:/downloads
+      - ./books:/books
+    ports:
+      - 30087:8787
+    networks:
+      - proxy-net
+    restart: unless-stopped

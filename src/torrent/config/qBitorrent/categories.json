@@ -1,0 +1,14 @@
+{
+    "audio": {
+        "save_path": "/downloads/torrent/complete/audio/"
+    },
+    "movies": {
+        "save_path": "/downloads/torrent/complete/movies/"
+    },
+    "software": {
+        "save_path": "/downloads/torrent/complete/software/"
+    },
+    "tv": {
+        "save_path": "/downloads/torrent/complete/tv/"
+    }
+}

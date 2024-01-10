@@ -1,0 +1,52 @@
+# ISSUE
+In short, SQLite is garbage on NFS mounts and will lock up causing major performance issues. More info [here][L1].
+
+
+## Workaround
+Services with SQLite databases like Radarr, Sonarr, etc. need to run on the localsystem disk. 
+
+The NFS mount & local filesystem folder structure layout including soft-links:
+
+```bash
+~$ cat /etc/fstab
+
+## Media 
+ 192.168.166.1:/mnt/pool.0.z3_multimedia/media  /mnt/media	nfs defaults 0	0
+
+## Pirate
+ 192.168.166.1:/mnt/pool.1.ssd_data/pirate      /mnt/pirate	nfs defaults 0	0
+
+~$ ls -alh /mnt
+
+    drwxr-xr-x media media /mnt/
+    drwxr-xr-x media media ├── media/
+    drwxr-xr-x media media |   └── videos/
+                           |       └── movies
+                           └── pirate/
+    -rw-rw-r-- media media      ├── docker-compose.yml
+    drwxr-xr-x media media      └── movies
+
+~$ ls -alh /opt/docker/{.pirate,pirate}
+
+    drwxr-xr-x media media /opt/
+    drwxr-xr-x media media └── docker/
+    drwxr-xr-x media media     ├── .pirate/
+    drwxr-xr-x media media     |   └── movies
+    drwxr-xr-x media media     |       ├── config/
+    -rw-r--r-- media media     |       ├── .env
+    -rw-r--r-- media media     |       ├── README.md
+    -rw-r--r-- media media     |       └── radarr.yaml
+                               |
+    lrwxrwxrwx media media     └── pirate/ -> /mnt/pirate
+    -rw-r--r-- media media         ├── docker-compose.yml
+    drwxr-xr-x media media         └── movies/
+    drwxr-xr-x media media             ├── backups
+    lrwxrwxrwx media media             ├── config -> /opt/docker/.pirate/movies/config
+    lrwxrwxrwx media media             ├── downloads -> /mnt/media/downloads
+    lrwxrwxrwx media media             ├── .env -> /opt/docker/.pirate/movies/.env
+    -rw-r--r-- media media             ├── README.md
+    lrwxrwxrwx media media             ├── radarr.yaml -> /opt/docker/.pirate/radarr.yaml
+    lrwxrwxrwx media media             └── movies -> /mnt/media/videos/movies
+```
+
+[L1]: https://www.sqlite.org/faq.html#q5

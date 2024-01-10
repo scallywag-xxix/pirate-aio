@@ -1,0 +1,19 @@
+---
+version: "3.9"
+
+services: 
+  tv:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: tv
+    env_file:
+      - .env
+    volumes:
+      - ./backups:/config/backups
+      - ./config:/config
+      - ./downloads:/downloads
+      - ./tv:/tv
+    ports:
+      - 30083:8989
+    networks:
+      - proxy-net
+    restart: unless-stopped
